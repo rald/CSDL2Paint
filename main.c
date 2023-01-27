@@ -8,9 +8,9 @@
 
 #define CANVAS_FILE "output.txt"
 
-int w = 16;
-int h = 16;
-int s = 16;
+int w = 32;
+int h = 32;
+int s = 8;
 int ps = 32;
 
 bool grid = true;
