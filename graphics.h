@@ -55,6 +55,9 @@ SDL_Event event;
 double touchX=0,touchY=0;
 bool touchDown=false;
 
+int mouseX=0,mouseY=0;
+bool mouseDown=false;
+
 void Graphics_SetColor(SDL_Renderer *renderer, SDL_Color c);
 
 void Graphics_DrawCircle(SDL_Renderer *renderer, int x, int y, int radius);
@@ -181,6 +184,20 @@ void Events()
 			touchX=event.tfinger.x*SCREEN_WIDTH;		
 			touchY=event.tfinger.y*SCREEN_HEIGHT;
 		break;
+    case SDL_MOUSEBUTTONDOWN:
+      mouseX=event.button.x;
+      mouseY=event.button.y;
+      mouseDown=true;
+    break;
+    case SDL_MOUSEBUTTONUP:
+      mouseX=event.button.x;
+      mouseY=event.button.y;
+      mouseDown=false;
+    break;
+    case SDL_MOUSEMOTION:
+      mouseX=event.motion.x;
+      mouseY=event.motion.y;
+    break;    
 		default:
 			break;
 		}

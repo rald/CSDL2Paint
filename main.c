@@ -8,10 +8,10 @@
 
 #define CANVAS_FILE "output.txt"
 
-int w = 32;
-int h = 32;
-int s = 32;
-int ps = 128;
+int w = 16;
+int h = 16;
+int s = 16;
+int ps = 32;
 
 bool grid = true;
 int color = 0;
@@ -52,10 +52,10 @@ void DrawPalette(int x, int y, int w, int h, int s)
 		if (k == color)
 		{
 			SetColor(colors[12]);
-			for (int l = 0; l < 5; l++)
+			for (int l = 0; l < 3; l++)
 				DrawRect(i * s + x + l, j * s + y + l, s - l * 2, s - l * 2);
 			SetColor(colors[0]);
-			for (int l = 5; l < 10; l++)
+			for (int l = 3; l < 6; l++)
 				DrawRect(i * s + x + l, j * s + y + l, s - l * 2, s - l * 2);
 		}
 	}
@@ -76,10 +76,10 @@ int main(void)
 			b[i] = color;
 	}
 
-	Screen(320, 240);
+	Screen(320, 480);
 
 	int cx = (SCREEN_WIDTH - w * s) / 2;
-	int cy = 16;
+	int cy = 8;
 
 	int pcx = (SCREEN_WIDTH - 8 * ps) / 2;
 	int pcy = SCREEN_HEIGHT - 2 * ps - 8;
@@ -92,7 +92,7 @@ int main(void)
 
 		ClearScreen();
 
-		DrawBitmap(b, w, h, cx, cy, s, 0);
+		DrawBitmap(b, w, h, cx, cy, s, -1);
 
 		if (grid)
 			DrawGrid(b, cx, cy, w, h, s);
@@ -104,23 +104,23 @@ int main(void)
 
 		DrawPalette(pcx, pcy, w, h, ps);
 
-		if (touchDown && inrect(touchX, touchY, cx, cy, w * s, h * s))
+		if (mouseDown && inrect(mouseX, mouseY, cx, cy, w * s, h * s))
 		{
-			int x = (touchX - cx) / s;
-			int y = (touchY - cy) / s;
+			int x = (mouseX - cx) / s;
+			int y = (mouseY - cy) / s;
 			b[y * w + x] = color;
 
 			SaveBitmap(CANVAS_FILE, b, w, h);
 		}
 
-		if (touchDown && inrect(touchX, touchY, pcx, pcy, 8 * ps, 2 * ps))
+		if (mouseDown && inrect(mouseX, mouseY, pcx, pcy, 8 * ps, 2 * ps))
 		{
-			int x = (touchX - pcx) / ps;
-			int y = (touchY - pcy) / ps;
+			int x = (mouseX - pcx) / ps;
+			int y = (mouseY - pcy) / ps;
 			color = y * 8 + x;
 		}
 
-		DrawBitmap(b, w, h, cx + w * s - w * 4, cy + w * s + 32, 4, -1);
+		DrawBitmap(b, w, h, cx + w * s - w * 2, cy + w * s + 8, 2, -1);
 
 		SetColor(colors[0]);
 
